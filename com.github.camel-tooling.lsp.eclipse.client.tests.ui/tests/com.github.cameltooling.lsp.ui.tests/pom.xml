@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.github.camel-tooling.lsp</groupId>
@@ -30,10 +29,48 @@
 		<sonar.jacoco.reportPath>../../../target/jacoco.exec</sonar.jacoco.reportPath>
 		<sonar.jacoco.itReportPath>../../../target/jacoco-it.exec</sonar.jacoco.itReportPath>
 		<ui.tests.vmargs>-XX:+HeapDumpOnOutOfMemoryError</ui.tests.vmargs>
+		<jeclipse.version>1.0.10</jeclipse.version>
+		<camel-lsp-server-version>1.1.0-SNAPSHOT</camel-lsp-server-version>
 	</properties>
-	
+
+	<repositories>
+		<repository>
+			<id>sonatype-snapshots</id>
+			<name>Sonatype Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<releases><enabled>false</enabled></releases>
+			<snapshots><enabled>true</enabled></snapshots>
+		</repository>
+	</repositories>
+
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>get-deps</id>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<phase>generate-resources</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<artifactItems>
+						<artifactItem>
+							<groupId>com.github.camel-tooling</groupId>
+							<artifactId>camel-lsp-server</artifactId>
+							<version>${camel-lsp-server-version}</version>
+						</artifactItem>
+					</artifactItems>
+					<useBaseVersion>true</useBaseVersion>
+					<skip>false</skip>
+					<outputDirectory>${project.build.directory}/com.github.camel-tooling.lsp.eclipse.client/libs/</outputDirectory>
+				</configuration>
+			</plugin>
+
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>2.6</version>
@@ -57,7 +94,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<!-- LSP Eclipse Client Tests -->
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
