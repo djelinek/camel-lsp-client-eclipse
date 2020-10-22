@@ -33,10 +33,23 @@
 					<includes>
 						<include>**/*IT.class</include>
 					</includes>
-					<argLine>${tycho.testArgLine} -XX:+HeapDumpOnOutOfMemoryError</argLine>
+					<argLine>${tycho.testArgLine} -XX:+HeapDumpOnOutOfMemoryError ${macOS.vmargs}</argLine>
 					<osgiDataDirectory>${project.basedir}/target/work sp@cé</osgiDataDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<profile>
+			<id>macos</id>
+			<activation>
+				<os>
+					<family>mac</family>
+				</os>
+			</activation>
+			<properties>
+				<macOS.vmargs>-XstartOnFirstThread</macOS.vmargs>
+			</properties>
+		</profile>
+	</profiles>
 </project>

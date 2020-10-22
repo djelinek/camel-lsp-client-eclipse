@@ -179,7 +179,7 @@ public class CamelLSPCompletionTest extends DefaultTest {
 		javaWiz.open();
 		JavaProjectWizardFirstPage javaWizPage = new JavaProjectWizardFirstPage(javaWiz);
 		javaWizPage.setName(name);
-		javaWiz.finish(TimePeriod.DEFAULT);
+		javaWiz.finish(TimePeriod.LONG);
 	}
 
 	private void assertComponentSchemes(List<String> proposals) {
